@@ -2,7 +2,7 @@
   "name": "book-review-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mmendiratta.github.io/book-review-frontend",
+  "homepage": "rainareviews.com",
   "dependencies": {
     "cra-template": "1.2.0",
     "gh-pages": "^4.0.0",
