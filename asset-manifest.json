@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.073c9b0a.css",
-    "main.js": "/static/js/main.8c9cd75f.js",
-    "static/js/496.be9a69c2.chunk.js": "/static/js/496.be9a69c2.chunk.js",
-    "static/media/logo.svg": "/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "index.html": "/index.html",
-    "main.073c9b0a.css.map": "/static/css/main.073c9b0a.css.map",
-    "main.8c9cd75f.js.map": "/static/js/main.8c9cd75f.js.map",
-    "496.be9a69c2.chunk.js.map": "/static/js/496.be9a69c2.chunk.js.map"
+    "main.css": "/book-review-frontend/static/css/main.073c9b0a.css",
+    "main.js": "/book-review-frontend/static/js/main.f3525bee.js",
+    "static/js/496.be9a69c2.chunk.js": "/book-review-frontend/static/js/496.be9a69c2.chunk.js",
+    "static/media/logo.svg": "/book-review-frontend/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/book-review-frontend/index.html",
+    "main.073c9b0a.css.map": "/book-review-frontend/static/css/main.073c9b0a.css.map",
+    "main.f3525bee.js.map": "/book-review-frontend/static/js/main.f3525bee.js.map",
+    "496.be9a69c2.chunk.js.map": "/book-review-frontend/static/js/496.be9a69c2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.8c9cd75f.js"
+    "static/js/main.f3525bee.js"
   ]
 }
