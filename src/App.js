@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Layout } from 'antd';
+import { Bio } from './sections/bio/Bio';
+import { Books } from './sections/books/Books';
+const { Content } = Layout;
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hi Prachi! Have fun in Hawaii
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <Layout hasSider>
+      <Bio />
+      <Books />
+      <Layout
+        style={{
+          padding: 24,
+          textAlign: 'center',
+          backgroundColor: "rgb(229, 105, 82)",
+          maxWidth: "300px"
+        }}
+      >
+        <Content>
 
+        </Content>
+      </Layout>
+    </Layout >
+  );
+};
 export default App;
