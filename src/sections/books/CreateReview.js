@@ -6,9 +6,10 @@ const {TextArea} = Input;
 const IMGUR_POST_URL = "https://api.imgur.com/3";
 
 const postToImgur = async (file) => {
+    console.log(file);
     const formData = new FormData();
 
-    formData.append('image', file);
+    formData.append('image', file.thumbUrl);
     const response = await fetch(`${IMGUR_POST_URL}/upload`, {
         method: "POST",
         async: true,
@@ -24,19 +25,19 @@ const postToImgur = async (file) => {
 const createNewPost = async (values) => {
     const imgurData = await postToImgur(values.upload[0]);
 
-   await fetch("https://book-review-backend-pl3j.onrender.com/api/book-reviews", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-        },
-        body: JSON.stringify({
-            title: values.title,
-            author: values.author,
-            review: values.review,
-            rating: values.rating,
-            url: imgurData.data.id || ""
-        }),
-    });
+//    await fetch("https://book-review-backend-pl3j.onrender.com/api/book-reviews", {
+//         method: "POST",
+//         headers: {
+//             'Content-Type': 'application/json; charset=utf-8',
+//         },
+//         body: JSON.stringify({
+//             title: values.title,
+//             author: values.author,
+//             review: values.review,
+//             rating: values.rating,
+//             url: imgurData.data.id || ""
+//         }),
+//     });
 }
 
 const normFile = (e) => {
