@@ -3,41 +3,39 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, Modal, Form, Input, Rate, Upload } from "antd";
 const {TextArea} = Input;
 
-const IMGUR_POST_URL = "https://api.imgur.com/3";
+const THUMBSNAP_POST_URL = "https://thumbsnap.com/api";
 
 const postToImgur = async (file) => {
-    console.log(file);
+    console.log(file.originFileObj);
     const formData = new FormData();
 
-    formData.append('image', file.thumbUrl);
-    const response = await fetch(`${IMGUR_POST_URL}/upload`, {
+    formData.append('media', file.originFileObj);
+    formData.append('key', "00002954e39a965411afb3077e9f2ad5");
+    const response = await fetch(`${THUMBSNAP_POST_URL}/upload`, {
         method: "POST",
         async: true,
         crossDomain: true,
-        headers: {
-            "Authorization": "Client-ID 043e2c759f7929c",
-        },
-        body: formData,
+        body: formData
     });
     return response.json();
 }
 
 const createNewPost = async (values) => {
-    const imgurData = await postToImgur(values.upload[0]);
+    const uploadData = await postToImgur(values.upload[0]);
 
-//    await fetch("https://book-review-backend-pl3j.onrender.com/api/book-reviews", {
-//         method: "POST",
-//         headers: {
-//             'Content-Type': 'application/json; charset=utf-8',
-//         },
-//         body: JSON.stringify({
-//             title: values.title,
-//             author: values.author,
-//             review: values.review,
-//             rating: values.rating,
-//             url: imgurData.data.id || ""
-//         }),
-//     });
+   await fetch("https://book-review-backend-pl3j.onrender.com/api/book-reviews", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify({
+            title: values.title,
+            author: values.author,
+            review: values.review,
+            rating: values.rating,
+            url: uploadData.data.media || ""
+        }),
+    });
 }
 
 const normFile = (e) => {
@@ -49,7 +47,7 @@ const normFile = (e) => {
 };
 
 export const CreateReview = () => {
-    const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false); 
     const [form] = Form.useForm();
 
     const handleModalState = () => {
@@ -71,8 +69,9 @@ export const CreateReview = () => {
                     form
                       .validateFields()
                       .then((values) => {
-                        form.resetFields();
                         createNewPost(values);
+                        form.resetFields();
+                      
                         handleModalState();
                       })
                       .catch((info) => {
@@ -134,12 +133,11 @@ export const CreateReview = () => {
                 </Form.Item> 
                 <Form.Item
                     name="upload"
-                    valuePropName="file"
                     getValueFromEvent={normFile}
                 >
-                    <Upload name="bookCover" listType="picture" >
+                    <Upload name="bookCover">
                         <Button icon={<UploadOutlined />}>Upload Book Cover</Button>
-                    </Upload>
+                    </Upload> 
                 </Form.Item>
             </Form>
             </Modal>
