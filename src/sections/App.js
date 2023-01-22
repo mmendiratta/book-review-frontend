@@ -27,7 +27,7 @@ const LoginPage = () => {
 const App = () => {
   return (
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" exact element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
   );
