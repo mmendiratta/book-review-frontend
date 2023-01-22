@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/rainareviews.com/static/css/main.e6c13ad2.css",
-    "main.js": "/rainareviews.com/static/js/main.693c2bca.js",
-    "static/js/496.be9a69c2.chunk.js": "/rainareviews.com/static/js/496.be9a69c2.chunk.js",
-    "static/media/book-review-gif.gif": "/rainareviews.com/static/media/book-review-gif.97502662f51b9b3e4a2c.gif",
-    "static/media/prachi-bio-image.jpg": "/rainareviews.com/static/media/prachi-bio-image.dc0fc01452cc8ac2006c.jpg",
-    "index.html": "/rainareviews.com/index.html",
-    "main.e6c13ad2.css.map": "/rainareviews.com/static/css/main.e6c13ad2.css.map",
-    "main.693c2bca.js.map": "/rainareviews.com/static/js/main.693c2bca.js.map",
-    "496.be9a69c2.chunk.js.map": "/rainareviews.com/static/js/496.be9a69c2.chunk.js.map"
+    "main.css": "/static/css/main.e6c13ad2.css",
+    "main.js": "/static/js/main.24c3b189.js",
+    "static/js/496.be9a69c2.chunk.js": "/static/js/496.be9a69c2.chunk.js",
+    "static/media/book-review-gif.gif": "/static/media/book-review-gif.97502662f51b9b3e4a2c.gif",
+    "static/media/prachi-bio-image.jpg": "/static/media/prachi-bio-image.dc0fc01452cc8ac2006c.jpg",
+    "index.html": "/index.html",
+    "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
+    "main.24c3b189.js.map": "/static/js/main.24c3b189.js.map",
+    "496.be9a69c2.chunk.js.map": "/static/js/496.be9a69c2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.693c2bca.js"
+    "static/js/main.24c3b189.js"
   ]
 }
