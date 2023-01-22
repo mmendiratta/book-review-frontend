@@ -2,7 +2,7 @@
   "name": "book-review-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
+  "homepage": "https://mmendiratta.github.io/book-review-frontend/#",
   "dependencies": {
     "antd": "^5.1.1",
     "cra-template": "1.2.0",
