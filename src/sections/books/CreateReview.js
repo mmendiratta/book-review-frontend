@@ -1,6 +1,7 @@
 import { useState, Fragment } from "react";
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Modal, Form, Input, Rate, Upload } from "antd";
+import { getAccountRoles } from "../../services/accountsApi";
 const {TextArea} = Input;
 
 const THUMBSNAP_POST_URL = "https://thumbsnap.com/api";
@@ -49,16 +50,18 @@ const normFile = (e) => {
 export const CreateReview = () => {
     const [modalOpen, setModalOpen] = useState(false); 
     const [form] = Form.useForm();
+    const userRoles = getAccountRoles();
 
     const handleModalState = () => {
         setModalOpen(preVal => !preVal)
         form.resetFields();
     }
+    
  
 
     return (
         <Fragment>
-            <Button onClick={() => { handleModalState() }}>Create Post</Button>
+            {userRoles && userRoles.includes("admin-role") && <Button onClick={() => { handleModalState() }}>Create Post</Button>}
             <Modal
                 open={modalOpen}
                 title="Create a Book Review"
