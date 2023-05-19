@@ -42,7 +42,7 @@ export const SelectedReviewSection = () => {
                     />
                 </Space>
             </Space>
-            <img src={selectedBookReview.review.url} alt="" width="200" height="300"/>
+             <img src={selectedBookReview.review.url} alt="" width="200" height="300" style={{boxShadow: "5px 5px 5px rgb(60, 47, 106)"}}/>
             <Paragraph style={{ color: "rgb(255, 253, 241)"}}>
                 {selectedBookReview.review.review}
             </Paragraph>
