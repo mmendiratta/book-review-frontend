@@ -1,10 +1,10 @@
-import React from 'react';
 import { Layout } from 'antd';
 import { isMobile } from 'react-device-detect';
 import { Bio } from './bio/Bio';
 import { Books } from './books/Books';
 import { BookSelectionProvider } from '../BookSelectionContext';
 import { SelectedReviewSection } from './selectedReview/SelectedReviewSection';
+import { SelectedReviewSectionMobile } from './selectedReview/SelectedReviewSectionMobile';
 import { Routes, Route } from 'react-router-dom';
 import { Login } from '../login/Login';
 
@@ -14,7 +14,11 @@ const HomePage = () => {
       <BookSelectionProvider>
         <Bio />
         <Books />
-        <SelectedReviewSection />
+        {isMobile ? 
+          <SelectedReviewSectionMobile />
+          :
+          <SelectedReviewSection />
+        }
       </BookSelectionProvider>
     </Layout >
   )
@@ -27,8 +31,8 @@ const LoginPage = () => {
 const App = () => {
   return (
       <Routes>
-        <Route path="/" exact element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route key="home" path="/" exact element={<HomePage />} />
+        <Route key="login" path="/login" element={<LoginPage />} />
       </Routes>
   );
 };

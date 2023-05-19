@@ -23,14 +23,14 @@ export const Books = () => {
     <Layout
         style={{ padding: 24, background: "rgb(255, 253, 241)" }}
     >
-        <Content>
+        <Content style={{ }}>
             <Space size="middle">
                 <Typography.Title level={1} style={{ margin: 0 }}>
                     {`${reviews.length} Reviews`}
                 </Typography.Title>       
                 <CreateReview />
             </Space>
-            <Row gutter={16}>
+            <Row style={{display: "flex", direction: "row", gap: "70px", justifyContent: "center"}}>
                 {reviews.map(review => {
                     return <BookDisplay review={review} key={review._id}/>
                 })}            

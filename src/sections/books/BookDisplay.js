@@ -1,4 +1,4 @@
-import { Space, Typography } from "antd"
+import { Popover, Space, Typography } from "antd"
 import { useBookSelectionContext } from "../../BookSelectionContext"
 
 export const BookDisplay = (review) => {
@@ -11,9 +11,11 @@ export const BookDisplay = (review) => {
             onClick={() => setSelectedBookReview(review)}
         >
             <img src={review.review.url} alt="" width="200" height="300"/>
-            <Typography.Title level={4} style={{ margin: 0 }}>
-                {review.review.title}
-            </Typography.Title>
+            <Popover content={review.review.title}>
+                <Typography.Title level={4} style={{ margin: 0 }}>
+                    {review.review.title.replace(/(.{18})..+/, "$1…")}
+                </Typography.Title>
+            </Popover>
         </Space>
         
     )

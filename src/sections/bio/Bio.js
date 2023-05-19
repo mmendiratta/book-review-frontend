@@ -5,6 +5,7 @@ import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
 import bioPicture from "./prachi-bio-image.jpg";
 import bookGlass from "./book-review-gif.gif";
+import { isMobile } from 'react-device-detect';
 
 export const Bio = () => {
     return (
@@ -13,7 +14,13 @@ export const Bio = () => {
                 padding: 24,
                 textAlign: 'center',
                 background: "rgb(60, 47, 106)",
-                maxWidth: "400px",
+                maxWidth: !isMobile ? "400px": "none",  
+                position: !isMobile ? "-webkit-sticky" : "none", /* for Safari */
+                // eslint-disable-next-line no-dupe-keys
+                position: !isMobile ? "sticky": "none",
+                top: !isMobile ? "0" : "none",
+                alignSelf: !isMobile ? "flex-start" : "none",
+                minHeight: "100vh"
             }}
         >
             <Content>
@@ -24,9 +31,12 @@ export const Bio = () => {
                     thrillers, murder mysteries, and business-related non-fiction. My favorite authors are Lucy Foley and 
                     Malcolm Gladwell :)
                 </Paragraph>
-                <Space style={{paddingTop: "24px"}}>
+                <Space style={{paddingTop: "24px", paddingBottom: "24px"}}>
                     <img src={bookGlass} alt="" width="250" height="250" />
                 </Space>
+                <Paragraph style={{ color: "rgb(255, 253, 241)"}}>
+                    P.S. the books might take an extra second to load, so please be patient :)
+                </Paragraph>
             </Content>
         </Layout>
     );
