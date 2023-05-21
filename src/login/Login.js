@@ -27,7 +27,6 @@ export const Login = () => {
                 maxWidth: 600,
             }}
             onFinish={onFinish}
-            // onFinishFailed={onFinishFailed}
             autoComplete="off"
         >
             <Form.Item

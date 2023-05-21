@@ -14,6 +14,7 @@ export const SelectedReviewSection = () => {
     }
 
     return (
+      
         <Layout
           style={{
             padding: 24,
@@ -22,17 +23,19 @@ export const SelectedReviewSection = () => {
             maxWidth: "400px",
             transition: "transform 0.3s ease-out",
             position: !isMobile ? "-webkit-sticky" : "none", /* for Safari */
-                // eslint-disable-next-line no-dupe-keys
-                position: !isMobile ? "sticky": "none",
-                top: !isMobile ? "0" : "none",
-                alignSelf: !isMobile ? "flex-start" : "none",
-                minHeight: "100vh"
+            // eslint-disable-next-line no-dupe-keys
+            position: !isMobile ? "sticky": "none",
+            top: !isMobile ? "0" : "none",
+            alignSelf: !isMobile ? "flex-start" : "none",
+            minHeight: "100vh"
           }}
         >
-          <Content style={{ marginTop: 0 }}>
+          <Content style={{ 
+              marginTop: 0,  
+            }}>
             <Space direction="horizontal">
                 <Title style={{color: "rgb(255, 253, 241)"}}>
-                        {selectedBookReview.review.title} 
+                    {selectedBookReview.review.title} 
                 </Title>
                 <Space style={{paddingTop: 24}}>
                     <Button 
@@ -42,12 +45,19 @@ export const SelectedReviewSection = () => {
                     />
                 </Space>
             </Space>
-             <img src={selectedBookReview.review.url} alt="" width="200" height="300" style={{boxShadow: "5px 5px 5px rgb(60, 47, 106)"}}/>
+            <img 
+              src={selectedBookReview.review.url}
+              alt=""
+              width="200"
+              height="300"
+              style={{boxShadow: "5px 5px 5px rgb(60, 47, 106)"}}
+            />
             <Paragraph style={{ color: "rgb(255, 253, 241)"}}>
                 {selectedBookReview.review.review}
             </Paragraph>
             <Rate defaultValue={selectedBookReview.review.rating} disabled/>
           </Content>
         </Layout>
+        
     )
 }
