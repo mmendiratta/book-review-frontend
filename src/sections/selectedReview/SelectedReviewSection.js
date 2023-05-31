@@ -2,12 +2,16 @@ import { Layout, Button, Space, Rate } from "antd"
 import { useBookSelectionContext } from "../../BookSelectionContext";
 import Title from "antd/es/typography/Title";
 import Paragraph from "antd/es/typography/Paragraph";
-import { CloseCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, EditFilled } from '@ant-design/icons';
 import { isMobile } from 'react-device-detect';
 const { Content } = Layout;
 
 export const SelectedReviewSection = () => {
-    const { selectedBookReview, setSelectedBookReview }= useBookSelectionContext()
+    const { 
+      selectedBookReview,
+      setSelectedBookReview,
+      setEditBook 
+    } = useBookSelectionContext();
     
     if (!selectedBookReview) {
         return;
@@ -42,6 +46,11 @@ export const SelectedReviewSection = () => {
                         danger shape="circle" 
                         icon={<CloseCircleOutlined />} 
                         onClick={() => setSelectedBookReview(null)}
+                    />
+                     <Button 
+                        danger shape="e" 
+                        icon={<EditFilled />} 
+                        onClick={() => setEditBook(prev => !prev)}
                     />
                 </Space>
             </Space>

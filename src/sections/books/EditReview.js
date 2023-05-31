@@ -1,31 +1,14 @@
-import { useState, Fragment } from "react";
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, Modal, Form, Input, Rate, Upload } from "antd";
+import {Fragment} from "react";
+import { Button, Modal, Form, Input, Rate } from "antd";
+import { useBookSelectionContext } from "../../BookSelectionContext";
 import { getAccountRoles } from "../../services/accountsApi";
 const {TextArea} = Input;
 
-const THUMBSNAP_POST_URL = "https://thumbsnap.com/api";
+const editBookReview = async (values, url, id) => {
+   // const uploadData = await postToImgur(values.upload[0]);
 
-const postToImgur = async (file) => {
-    console.log(file.originFileObj);
-    const formData = new FormData();
-
-    formData.append('media', file.originFileObj);
-    formData.append('key', "00002954e39a965411afb3077e9f2ad5");
-    const response = await fetch(`${THUMBSNAP_POST_URL}/upload`, {
-        method: "POST",
-        async: true,
-        crossDomain: true,
-        body: formData
-    });
-    return response.json();
-}
-
-const createNewPost = async (values) => {
-    const uploadData = await postToImgur(values.upload[0]);
-
-   await fetch("https://book-review-backend-pl3j.onrender.com/api/book-reviews", {
-        method: "POST",
+   await fetch(`https://book-review-backend-pl3j.onrender.com/api/book-reviews/${id}`, {
+        method: "PUT",
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
         },
@@ -34,44 +17,37 @@ const createNewPost = async (values) => {
             author: values.author,
             review: values.review,
             rating: values.rating,
-            url: uploadData.data.media || ""
+            url: url,
         }),
     });
 }
 
-const normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-};
-
-export const CreateReview = () => {
-    const [modalOpen, setModalOpen] = useState(false); 
+export const EditReview = () => {
+    const { editBook, selectedBookReview, setEditBook } = useBookSelectionContext();
     const [form] = Form.useForm();
     const userRoles = getAccountRoles();
+    console.log(selectedBookReview)
 
     const handleModalState = () => {
-        setModalOpen(preVal => !preVal)
+        setEditBook(preVal => !preVal)
         form.resetFields();
     }
  
 
     return (
         <Fragment>
-            {userRoles && userRoles.includes("admin-role") && <Button onClick={() => { handleModalState() }}>Create Post</Button>}
+            {userRoles && userRoles.includes("admin-role") && selectedBookReview && <Button onClick={() => { handleModalState() }}>Create Post</Button>}
             <Modal
-                open={modalOpen}
-                title="Create a Book Review"
-                okText="Create"
+                open={editBook}
+                title="Edit a Book Review"
+                okText="Edit"
                 cancelText="Cancel"
                 onCancel={handleModalState}
                 onOk={() => {
                     form
                       .validateFields()
                       .then((values) => {
-                        createNewPost(values);
+                        editBookReview(values, selectedBookReview?.review.url, selectedBookReview?.review._id);
                         form.resetFields();
                       
                         handleModalState();
@@ -94,6 +70,7 @@ export const CreateReview = () => {
                         message: 'Please input the title of book!',
                         },
                     ]}
+                    initialValue={selectedBookReview?.review.title}
                 >
                     <Input placeholder="Title"/>
                 </Form.Item>
@@ -105,6 +82,7 @@ export const CreateReview = () => {
                         message: 'Please input the author!',
                         },
                     ]}
+                    initialValue={selectedBookReview?.review.author}
                 >
                     <Input placeholder="Author"/>
                 </Form.Item>
@@ -116,6 +94,7 @@ export const CreateReview = () => {
                         message: 'Please add your review!',
                         },
                     ]}
+                    initialValue={selectedBookReview?.review.review}
                 >
                     <TextArea 
                         showCount placeholder="Review" 
@@ -130,17 +109,19 @@ export const CreateReview = () => {
                         message: 'Please add your rating!',
                         },
                     ]}
+                    initialValue={selectedBookReview?.review.rating}
                 >
                     <Rate initialValue={0}/>
                 </Form.Item> 
-                <Form.Item
+                {/* <Form.Item
                     name="upload"
                     getValueFromEvent={normFile}
+        
                 >
                     <Upload name="bookCover">
                         <Button icon={<UploadOutlined />}>Upload Book Cover</Button>
                     </Upload> 
-                </Form.Item>
+                </Form.Item> */}
             </Form>
             </Modal>
         </Fragment >

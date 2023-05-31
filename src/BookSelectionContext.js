@@ -5,11 +5,15 @@ const BookSelectionContext = createContext();
 
 const BookSelectionProvider = ({children}) => {
     const [selectedBookReview, setSelectedBookReview] = useState();
+    const [editBook, setEditBook] = useState(false);
+
     return (
         <BookSelectionContext.Provider
             value={{
                 selectedBookReview,
-                setSelectedBookReview
+                setSelectedBookReview,
+                editBook,
+                setEditBook,
             }}
         >
             {children}

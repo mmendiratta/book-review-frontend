@@ -2,6 +2,7 @@ import { Layout, Row, Space, Typography  } from 'antd';
 import { useEffect, useState } from 'react';
 import { BookDisplay } from './BookDisplay';
 import { CreateReview } from './CreateReview';
+import { EditReview } from './EditReview';
 const { Content } = Layout;
 
 export const Books = () => {
@@ -29,6 +30,7 @@ export const Books = () => {
                     {`${reviews.length} Reviews`}
                 </Typography.Title>       
                 <CreateReview />
+                <EditReview />
             </Space>
             <Row style={{display: "flex", direction: "row", gap: "70px", justifyContent: "center"}}>
                 {reviews.map(review => {
