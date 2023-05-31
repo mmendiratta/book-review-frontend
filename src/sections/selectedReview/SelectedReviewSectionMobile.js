@@ -5,10 +5,12 @@ import { useBookSelectionContext } from "../../BookSelectionContext";
 import Title from "antd/es/typography/Title";
 import Paragraph from "antd/es/typography/Paragraph";
 import { EditFilled } from '@ant-design/icons';
+import { getAccountRoles } from "../../services/accountsApi";
 const { Content } = Layout;
 
 export const SelectedReviewSectionMobile = () => {
     const { selectedBookReview, setSelectedBookReview, setEditBook }= useBookSelectionContext();
+    const userRoles = getAccountRoles();
     
     if (!selectedBookReview) {
         return;
@@ -37,11 +39,13 @@ export const SelectedReviewSectionMobile = () => {
                 </Title>
 
             </Space>
+            {userRoles && userRoles.includes("admin-role") && 
             <Button 
                 danger shape="circle" 
                 icon={<EditFilled />} 
                 onClick={() => setEditBook(prev => !prev)}
             />
+        }
             <div>
                 <img src={selectedBookReview.review.url} alt="" width="200" height="300"/>
             </div>

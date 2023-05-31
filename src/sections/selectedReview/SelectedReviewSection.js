@@ -4,6 +4,7 @@ import Title from "antd/es/typography/Title";
 import Paragraph from "antd/es/typography/Paragraph";
 import { CloseCircleOutlined, EditFilled } from '@ant-design/icons';
 import { isMobile } from 'react-device-detect';
+import { getAccountRoles } from "../../services/accountsApi";
 const { Content } = Layout;
 
 export const SelectedReviewSection = () => {
@@ -12,6 +13,7 @@ export const SelectedReviewSection = () => {
       setSelectedBookReview,
       setEditBook 
     } = useBookSelectionContext();
+    const userRoles = getAccountRoles();
     
     if (!selectedBookReview) {
         return;
@@ -47,11 +49,13 @@ export const SelectedReviewSection = () => {
                         icon={<CloseCircleOutlined />} 
                         onClick={() => setSelectedBookReview(null)}
                     />
+                      {userRoles && userRoles.includes("admin-role") && 
                      <Button 
                         danger shape="e" 
                         icon={<EditFilled />} 
                         onClick={() => setEditBook(prev => !prev)}
                     />
+          }
                 </Space>
             </Space>
             <img 
