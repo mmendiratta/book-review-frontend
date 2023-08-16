@@ -1,7 +1,6 @@
 import {Fragment} from "react";
-import { Button, Modal, Form, Input, Rate } from "antd";
+import { Modal, Form, Input, Rate } from "antd";
 import { useBookSelectionContext } from "../../BookSelectionContext";
-import { getAccountRoles } from "../../services/accountsApi";
 const {TextArea} = Input;
 
 const editBookReview = async (values, url, id) => {
@@ -22,11 +21,9 @@ const editBookReview = async (values, url, id) => {
     });
 }
 
-export const EditReview = () => {
+export const EditReview = ({getBookBookReviews}) => {
     const { editBook, selectedBookReview, setEditBook } = useBookSelectionContext();
     const [form] = Form.useForm();
-    const userRoles = getAccountRoles();
-    console.log(selectedBookReview)
 
     const handleModalState = () => {
         setEditBook(preVal => !preVal)
@@ -36,7 +33,6 @@ export const EditReview = () => {
 
     return (
         <Fragment>
-            {userRoles && userRoles.includes("admin-role") && selectedBookReview && <Button onClick={() => { handleModalState() }}>Create Post</Button>}
             <Modal
                 open={editBook}
                 title="Edit a Book Review"
@@ -51,6 +47,7 @@ export const EditReview = () => {
                         form.resetFields();
                       
                         handleModalState();
+                       getBookBookReviews();
                       })
                       .catch((info) => {
                         console.log('Validate Failed:', info);

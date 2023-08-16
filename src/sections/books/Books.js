@@ -29,8 +29,8 @@ export const Books = () => {
                 <Typography.Title level={1} style={{ margin: 0 }}>
                     {`${reviews.length} Reviews`}
                 </Typography.Title>       
-                <CreateReview />
-                <EditReview />
+                <CreateReview getBookBookReviews={getBookBookReviews} />
+                <EditReview getBookBookReviews={getBookBookReviews} />
             </Space>
             <Row style={{display: "flex", direction: "row", gap: "70px", justifyContent: "center"}}>
                 {reviews.map(review => {

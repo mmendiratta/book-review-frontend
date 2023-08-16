@@ -2,6 +2,7 @@ import { useState, Fragment } from "react";
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Modal, Form, Input, Rate, Upload } from "antd";
 import { getAccountRoles } from "../../services/accountsApi";
+
 const {TextArea} = Input;
 
 const THUMBSNAP_POST_URL = "https://thumbsnap.com/api";
@@ -47,7 +48,7 @@ const normFile = (e) => {
     return e?.fileList;
 };
 
-export const CreateReview = () => {
+export const CreateReview = ({getBookBookReviews}) => {
     const [modalOpen, setModalOpen] = useState(false); 
     const [form] = Form.useForm();
     const userRoles = getAccountRoles();
@@ -75,6 +76,7 @@ export const CreateReview = () => {
                         form.resetFields();
                       
                         handleModalState();
+                        getBookBookReviews();
                       })
                       .catch((info) => {
                         console.log('Validate Failed:', info);
