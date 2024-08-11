@@ -3,7 +3,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, Modal, Form, Input, Rate, Upload } from "antd";
 import { getAccountRoles } from "../../services/accountsApi";
 
-const {TextArea} = Input;
+const { TextArea } = Input;
 
 const THUMBSNAP_POST_URL = "https://thumbsnap.com/api";
 
@@ -25,7 +25,7 @@ const postToImgur = async (file) => {
 const createNewPost = async (values) => {
     const uploadData = await postToImgur(values.upload[0]);
 
-   await fetch("https://book-review-backend-pl3j.onrender.com/api/book-reviews", {
+    await fetch("https://book-review-backend-pl3j.onrender.com/api/book-reviews", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
@@ -43,13 +43,13 @@ const createNewPost = async (values) => {
 const normFile = (e) => {
     console.log('Upload event:', e);
     if (Array.isArray(e)) {
-      return e;
+        return e;
     }
     return e?.fileList;
 };
 
-export const CreateReview = ({getBookBookReviews}) => {
-    const [modalOpen, setModalOpen] = useState(false); 
+export const CreateReview = ({ getBookBookReviews }) => {
+    const [modalOpen, setModalOpen] = useState(false);
     const [form] = Form.useForm();
     const userRoles = getAccountRoles();
 
@@ -57,7 +57,7 @@ export const CreateReview = ({getBookBookReviews}) => {
         setModalOpen(preVal => !preVal)
         form.resetFields();
     }
- 
+
 
     return (
         <Fragment>
@@ -70,80 +70,80 @@ export const CreateReview = ({getBookBookReviews}) => {
                 onCancel={handleModalState}
                 onOk={() => {
                     form
-                      .validateFields()
-                      .then((values) => {
-                        createNewPost(values);
-                        form.resetFields();
-                      
-                        handleModalState();
-                        getBookBookReviews();
-                      })
-                      .catch((info) => {
-                        console.log('Validate Failed:', info);
-                      });
-                  }}
+                        .validateFields()
+                        .then((values) => {
+                            createNewPost(values);
+                            form.resetFields();
+
+                            handleModalState();
+                            getBookBookReviews();
+                        })
+                        .catch((info) => {
+                            console.log('Validate Failed:', info);
+                        });
+                }}
             >
-            <Form
-                form={form}
-                layout="vertical"
-                name="form_in_modal"
-            >
-                <Form.Item
-                    name="title"
-                    rules={[
-                        {
-                        required: true,
-                        message: 'Please input the title of book!',
-                        },
-                    ]}
+                <Form
+                    form={form}
+                    layout="vertical"
+                    name="form_in_modal"
                 >
-                    <Input placeholder="Title"/>
-                </Form.Item>
-                <Form.Item
-                    name="author"
-                    rules={[
-                        {
-                        required: true,
-                        message: 'Please input the author!',
-                        },
-                    ]}
-                >
-                    <Input placeholder="Author"/>
-                </Form.Item>
-                <Form.Item  
-                    name="review"
-                    rules={[
-                        {
-                        required: true,
-                        message: 'Please add your review!',
-                        },
-                    ]}
-                >
-                    <TextArea 
-                        showCount placeholder="Review" 
-                        style={{ height: 120 }}
-                    />
-                </Form.Item>
-                <Form.Item
-                    name="rating"
-                    rules={[
-                        {
-                        required: true,
-                        message: 'Please add your rating!',
-                        },
-                    ]}
-                >
-                    <Rate initialValue={0}/>
-                </Form.Item> 
-                <Form.Item
-                    name="upload"
-                    getValueFromEvent={normFile}
-                >
-                    <Upload name="bookCover">
-                        <Button icon={<UploadOutlined />}>Upload Book Cover</Button>
-                    </Upload> 
-                </Form.Item>
-            </Form>
+                    <Form.Item
+                        name="title"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input the title of book!',
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Title" />
+                    </Form.Item>
+                    <Form.Item
+                        name="author"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input the author!',
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Author" />
+                    </Form.Item>
+                    <Form.Item
+                        name="review"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please add your review!',
+                            },
+                        ]}
+                    >
+                        <TextArea
+                            showCount placeholder="Review"
+                            style={{ height: 120 }}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="rating"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please add your rating!',
+                            },
+                        ]}
+                    >
+                        <Rate initialValue={0} />
+                    </Form.Item>
+                    <Form.Item
+                        name="upload"
+                        getValueFromEvent={normFile}
+                    >
+                        <Upload name="bookCover">
+                            <Button icon={<UploadOutlined />}>Upload Book Cover</Button>
+                        </Upload>
+                    </Form.Item>
+                </Form>
             </Modal>
         </Fragment >
     )

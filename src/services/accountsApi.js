@@ -27,3 +27,9 @@ export function getAccountRoles() {
         return user.roles;
     }
 };
+
+export const getBookBookReviews = async () => {
+    const data = await fetch("https://book-review-backend-pl3j.onrender.com/api/book-reviews")
+        .then(response => response.json());
+    return data;
+}

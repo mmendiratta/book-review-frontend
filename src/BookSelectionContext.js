@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react"
 const BookSelectionContext = createContext();
 
 
-const BookSelectionProvider = ({children}) => {
+const BookSelectionProvider = ({ children }) => {
     const [selectedBookReview, setSelectedBookReview] = useState();
     const [editBook, setEditBook] = useState(false);
 
@@ -25,8 +25,8 @@ const useBookSelectionContext = () => {
     const context = useContext(BookSelectionContext);
     if (context === undefined) {
         throw new Error('useBookSelectionContext must be used within a BookSelectionProvider')
-      }
+    }
     return context;
 }
 
-export {BookSelectionProvider, useBookSelectionContext}
+export { BookSelectionProvider, useBookSelectionContext }

@@ -6,6 +6,7 @@ import Title from "antd/es/typography/Title";
 import Paragraph from "antd/es/typography/Paragraph";
 import { EditFilled } from '@ant-design/icons';
 import { getAccountRoles } from "../../services/accountsApi";
+import { EditReview } from "../books/EditReview";
 const { Content } = Layout;
 
 export const SelectedReviewSectionMobile = () => {
@@ -54,6 +55,7 @@ export const SelectedReviewSectionMobile = () => {
             </Paragraph>
             <Rate defaultValue={selectedBookReview.review.rating} disabled/>
           </Content>
+          <EditReview selectedBook={selectedBookReview} />
         </Layout>
         </Modal>
     )

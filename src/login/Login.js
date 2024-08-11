@@ -9,7 +9,7 @@ export const Login = () => {
         console.log(values);
         const success = await login(values);
         if (!success) {
-          return console.log("Incorrect Credentials");
+            return console.log("Incorrect Credentials");
         }
         navigate("/")
     };
@@ -34,8 +34,8 @@ export const Login = () => {
                 name="username"
                 rules={[
                     {
-                    required: true,
-                    message: 'Please input your username!',
+                        required: true,
+                        message: 'Please input your username!',
                     },
                 ]}
             >
@@ -46,8 +46,8 @@ export const Login = () => {
                 name="password"
                 rules={[
                     {
-                    required: true,
-                    message: 'Please input your password!',
+                        required: true,
+                        message: 'Please input your password!',
                     },
                 ]}
             >

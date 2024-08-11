@@ -14,7 +14,7 @@ const HomePage = () => {
       <BookSelectionProvider>
         <Bio />
         <Books />
-        {isMobile ? <SelectedReviewSectionMobile /> : <SelectedReviewSection /> }
+        {isMobile ? <SelectedReviewSectionMobile /> : <SelectedReviewSection />}
       </BookSelectionProvider>
     </Layout >
   )
