@@ -1,11 +1,32 @@
-import { Fragment } from "react";
-import { Modal, Form, Input, Rate } from "antd";
+import { Fragment, useState } from "react";
+import { Modal, Form, Input, Rate,  Upload, Button } from "antd";
 import { useBookSelectionContext } from "../../BookSelectionContext";
 import { getBookBookReviews } from "../../services/accountsApi";
+import { UploadOutlined } from '@ant-design/icons';
+
 const { TextArea } = Input;
 
-const editBookReview = async (values, url, id) => {
-    // const uploadData = await postToImgur(values.upload[0]);
+const THUMBSNAP_POST_URL = "https://thumbsnap.com/api";
+
+
+const postToImgur = async (file) => {
+    console.log(file.originFileObj);
+    const formData = new FormData();
+
+    formData.append('media', file.originFileObj);
+    formData.append('key', "00002954e39a965411afb3077e9f2ad5");
+    const response = await fetch(`${THUMBSNAP_POST_URL}/upload`, {
+        method: "POST",
+        async: true,
+        crossDomain: true,
+        body: formData
+    });
+    return response.json();
+}
+    
+
+const editBookReview = async (values, url, id, newImg) => {
+    const uploadData = newImg ? await postToImgur(values.upload[0]) : url;
 
     await fetch(`https://book-review-backend-pl3j.onrender.com/api/book-reviews/${id}`, {
         method: "PUT",
@@ -17,7 +38,7 @@ const editBookReview = async (values, url, id) => {
             author: values.author,
             review: values.review,
             rating: values.rating,
-            url: url,
+            url: newImg ? uploadData.data.media || "" : url,
         }),
     });
 }
@@ -25,13 +46,20 @@ const editBookReview = async (values, url, id) => {
 export const EditReview = ({selectedBook}) => {
     const { editBook, setEditBook } = useBookSelectionContext();
     const [form] = Form.useForm();
+    const [newImg, setNewImg] = useState(false);
 
     const handleModalState = () => {
         form.resetFields();
         setEditBook(false);
     }
 
-    console.log(selectedBook);
+    const normFile = (e) => {
+        console.log('Upload event:', e);
+        if (Array.isArray(e)) {
+            return e;
+        }
+        return e?.fileList;
+    };
 
     return (
         <Fragment>
@@ -45,7 +73,7 @@ export const EditReview = ({selectedBook}) => {
                     form
                         .validateFields()
                         .then((values) => {
-                            editBookReview(values, selectedBook?.review.url, selectedBook?.review._id);
+                            editBookReview(values, selectedBook?.review.url, selectedBook?.review._id, newImg);
                             form.resetFields();
 
                             handleModalState();
@@ -112,15 +140,15 @@ export const EditReview = ({selectedBook}) => {
                     >
                         <Rate initialValue={0} />
                     </Form.Item>
-                    {/* <Form.Item
+                    <Form.Item
                     name="upload"
                     getValueFromEvent={normFile}
         
                 >
                     <Upload name="bookCover">
-                        <Button icon={<UploadOutlined />}>Upload Book Cover</Button>
+                        <Button icon={<UploadOutlined />} onClick={() => setNewImg(true)}>Edit Book Cover</Button>
                     </Upload> 
-                </Form.Item> */}
+                </Form.Item>
                 </Form>
             </Modal>
         </Fragment >
