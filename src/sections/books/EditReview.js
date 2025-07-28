@@ -25,28 +25,15 @@ const postToImgur = async (file) => {
 }
     
 
-const editBookReview = async (values, url, id, newImg) => {
-    const uploadData = newImg ? await postToImgur(values.upload[0]) : url;
 
-    await fetch(`https://book-review-backend-pl3j.onrender.com/api/book-reviews/${id}`, {
-        method: "PUT",
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-        },
-        body: JSON.stringify({
-            title: values.title,
-            author: values.author,
-            review: values.review,
-            rating: values.rating,
-            url: newImg ? uploadData.data.media || "" : url,
-        }),
-    });
-}
+
 
 export const EditReview = ({selectedBook}) => {
     const { editBook, setEditBook } = useBookSelectionContext();
     const [form] = Form.useForm();
     const [newImg, setNewImg] = useState(false);
+    const [deleting, setDeleting] = useState(false);
+    const [updating, setUpdating] = useState(false);
 
     const handleModalState = () => {
         form.resetFields();
@@ -61,23 +48,61 @@ export const EditReview = ({selectedBook}) => {
         return e?.fileList;
     };
 
+    const editBookReview = async (values, url, id, newImg) => {
+        setUpdating(true)
+        const uploadData = newImg ? await postToImgur(values.upload[0]).catch((e) => {
+            console.log(e);
+            
+        }).catch((e) => {console.log(e);  setUpdating(false)}) : url;
+    
+        await fetch(`https://book-review-backend-pl3j.onrender.com/api/book-reviews/${id}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body: JSON.stringify({
+                id,
+                title: values.title,
+                author: values.author,
+                review: values.review,
+                rating: values.rating,
+                url: newImg ? uploadData.data.media || "" : url,
+            }),
+        }).finally(() => setUpdating(false));
+    }
+    
+
+    const deleteBookReview = async (id) => {
+        setDeleting(true);
+        await fetch(`https://book-review-backend-pl3j.onrender.com/api/book-reviews/${id}`, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+        }).finally(() =>{
+            setDeleting(false);
+            setEditBook(false);
+        } );
+    }
+
     return (
         <Fragment>
             <Modal
                 open={editBook}
                 title="Edit a Book Review"
-                okText="Edit"
+                okText={updating ? "Updating ..." : "Edit"}
                 cancelText="Cancel"
                 onCancel={handleModalState}
                 onOk={() => {
                     form
                         .validateFields()
-                        .then((values) => {
-                            editBookReview(values, selectedBook?.review.url, selectedBook?.review._id, newImg);
+                        .then(async (values) => {
+                            await editBookReview(values, selectedBook?.review.url, selectedBook?.review._id, newImg);
                             form.resetFields();
 
+                            setEditBook(false);
                             handleModalState();
-                            getBookBookReviews();
+                            await getBookBookReviews();
                         })
                         .catch((info) => {
                             console.log('Validate Failed:', info);
@@ -140,11 +165,13 @@ export const EditReview = ({selectedBook}) => {
                     >
                         <Rate initialValue={0} />
                     </Form.Item>
+                    <Button onClick={() => deleteBookReview(selectedBook?.review._id)}>{deleting ? "Deleting ..." : "Delete"}</Button>
                     <Form.Item
                     name="upload"
                     getValueFromEvent={normFile}
         
                 >
+                   
                     <Upload name="bookCover">
                         <Button icon={<UploadOutlined />} onClick={() => setNewImg(true)}>Edit Book Cover</Button>
                     </Upload> 

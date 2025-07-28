@@ -22,8 +22,33 @@ const postToImgur = async (file) => {
     return response.json();
 }
 
+const normFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+        return e;
+    }
+    return e?.fileList;
+};
+
+export const CreateReview = ({ getBookBookReviews }) => {
+    const [modalOpen, setModalOpen] = useState(false);
+    const [form] = Form.useForm();
+    const userRoles = getAccountRoles();
+    const [loading, setLoading] = useState(false);
+
+
+    const handleModalState = () => {
+        setModalOpen(preVal => !preVal)
+        form.resetFields();
+    }
+
+
 const createNewPost = async (values) => {
-    const uploadData = await postToImgur(values.upload[0]);
+    setLoading(true);
+    const uploadData = await postToImgur(values.upload[0]).catch((e) => {
+        console.log(e);
+        setLoading(false);
+    });
 
     await fetch("https://book-review-backend-pl3j.onrender.com/api/book-reviews", {
         method: "POST",
@@ -37,26 +62,9 @@ const createNewPost = async (values) => {
             rating: values.rating,
             url: uploadData.data.media || ""
         }),
-    });
+    }).finally(() => setLoading(false));
 }
 
-const normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-        return e;
-    }
-    return e?.fileList;
-};
-
-export const CreateReview = ({ getBookBookReviews }) => {
-    const [modalOpen, setModalOpen] = useState(false);
-    const [form] = Form.useForm();
-    const userRoles = getAccountRoles();
-
-    const handleModalState = () => {
-        setModalOpen(preVal => !preVal)
-        form.resetFields();
-    }
 
 
     return (
@@ -71,8 +79,8 @@ export const CreateReview = ({ getBookBookReviews }) => {
                 onOk={() => {
                     form
                         .validateFields()
-                        .then((values) => {
-                            createNewPost(values);
+                        .then(async(values) => {
+                            await createNewPost(values);
                             form.resetFields();
 
                             handleModalState();
@@ -143,6 +151,7 @@ export const CreateReview = ({ getBookBookReviews }) => {
                             <Button icon={<UploadOutlined />}>Upload Book Cover</Button>
                         </Upload>
                     </Form.Item>
+                    {loading && "Creating review ..."}
                 </Form>
             </Modal>
         </Fragment >
