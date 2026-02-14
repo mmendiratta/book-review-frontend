@@ -1,0 +1,131 @@
+/* ── Hero Shimmer ── */
+.hero-shimmer {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  padding: 64px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-shimmer-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero-shimmer-label {
+  height: 14px;
+  width: 180px;
+}
+
+.hero-shimmer-title {
+  height: 52px;
+  width: 80%;
+  border-radius: 6px;
+}
+
+.hero-shimmer-author {
+  height: 22px;
+  width: 140px;
+}
+
+.hero-shimmer-text {
+  height: 16px;
+  width: 100%;
+}
+
+.hero-shimmer-btn {
+  height: 44px;
+  width: 180px;
+  border-radius: 24px;
+  margin-top: 8px;
+}
+
+.hero-shimmer-right {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-shimmer-cover {
+  width: 220px;
+  height: 320px;
+  border-radius: 4px;
+}
+
+/* ── Card Shimmer ── */
+.card-shimmer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: default;
+}
+
+.card-shimmer-cover {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 4px;
+}
+
+.card-shimmer-title {
+  height: 18px;
+  width: 80%;
+}
+
+.card-shimmer-author {
+  height: 14px;
+  width: 55%;
+}
+
+.card-shimmer-stars {
+  height: 16px;
+  width: 100px;
+  border-radius: 8px;
+}
+
+/* ── Grid Shimmer ── */
+.grid-shimmer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 32px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .grid-shimmer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-shimmer {
+    flex-direction: column-reverse;
+    padding: 32px 20px;
+    gap: 24px;
+  }
+
+  .hero-shimmer-right {
+    width: 100%;
+  }
+
+  .hero-shimmer-cover {
+    width: 150px;
+    height: 220px;
+    margin: 0 auto;
+  }
+
+  .hero-shimmer-title {
+    height: 36px;
+  }
+
+  .grid-shimmer {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 24px 20px;
+    gap: 16px;
+  }
+}

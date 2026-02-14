@@ -1,28 +1,69 @@
+:root {
+  --cream: #f5efe0;
+  --cream-light: #faf6ee;
+  --cream-card: #fffef7;
+  --brown-dark: #2c1a0e;
+  --brown-mid: #5c3d1e;
+  --brown-light: #8b6443;
+  --gold: #c9a227;
+  --border: #d4c5a9;
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Lora', Georgia, serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background-color: var(--cream);
+  color: var(--brown-dark);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.newStyle .ant-modal-content {
-  align-self: center;
-  position: relative;
-  background-clip: padding-box;
-  border: 0;
-  border-radius: 8px;
-  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-  pointer-events: auto;
-  padding: 0;
-  display: inline-block;
-  /* padding-bottom: 0; */
-  text-align: start;
-  vertical-align: middle;
+/* ── Shimmer animation ── */
+@keyframes shimmer {
+  0% { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #e8e0d0 0%,
+    #f5f0e6 50%,
+    #e8e0d0 100%
+  );
+  background-size: 1200px 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+/* ── Ant Design overrides ── */
+.ant-layout {
+  background: transparent !important;
+}
+
+.ant-layout-content {
+  background: transparent !important;
+}
+
+.ant-layout-sider {
+  background: transparent !important;
+}
+
+.ant-rate .ant-rate-star-full .ant-rate-star-second {
+  color: var(--gold);
+}
+
+.ant-rate .ant-rate-star-half .ant-rate-star-first {
+  color: var(--gold);
 }
