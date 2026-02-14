@@ -1,0 +1,233 @@
+/* ── Hero Section ── */
+.hero {
+  padding: 64px 48px 56px;
+  background: var(--cream);
+  overflow: hidden;
+  max-height: 800px;
+  opacity: 1;
+  transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
+}
+
+.hero--hidden {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 56px;
+}
+
+/* Left column */
+.hero-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+  margin: 0 0 20px;
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+  margin: 0 0 8px;
+}
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--brown-dark);
+  margin: 0 0 10px;
+}
+
+.hero-author {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--brown-mid);
+  margin: 0 0 24px;
+}
+
+.hero-excerpt {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.75;
+  color: var(--brown-mid);
+  margin: 0 0 32px;
+  max-width: 480px;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border: 1.5px solid var(--brown-dark);
+  border-radius: 24px;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brown-dark);
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+
+.hero-cta:hover {
+  background: var(--brown-dark);
+  color: var(--cream-light);
+}
+
+/* Right column — book cover */
+.hero-right {
+  flex-shrink: 0;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* subtle watercolor glow behind the book */
+  position: relative;
+}
+
+.hero-right::before {
+  content: '';
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 162, 39, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-book-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.hero-book-cover {
+  width: 220px;
+  height: auto;
+  display: block;
+  border-radius: 3px 6px 6px 3px;
+  transform: perspective(700px) rotateY(-10deg);
+  box-shadow:
+    8px 12px 32px rgba(44, 26, 14, 0.3),
+    -2px 0 8px rgba(0, 0, 0, 0.15),
+    inset -3px 0 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.hero-book-wrapper:hover .hero-book-cover {
+  transform: perspective(700px) rotateY(-16deg) translateX(-6px);
+  box-shadow:
+    14px 16px 40px rgba(44, 26, 14, 0.38),
+    -4px 0 10px rgba(0, 0, 0, 0.2),
+    inset -4px 0 8px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Divider ── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 48px;
+  max-width: 1200px;
+  margin: 0 auto 8px;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+}
+
+.section-divider::before {
+  background: linear-gradient(to right, transparent, var(--border));
+}
+
+.section-divider::after {
+  background: linear-gradient(to left, transparent, var(--border));
+}
+
+.divider-flank {
+  font-size: 7px;
+  color: var(--brown-light);
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.divider-center {
+  font-size: 22px;
+  color: var(--brown-light);
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .hero {
+    padding: 32px 20px 40px;
+  }
+
+  .hero-inner {
+    flex-direction: column-reverse;
+    gap: 28px;
+  }
+
+  .hero-right {
+    width: 100%;
+  }
+
+  .hero-right::before {
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero-book-cover {
+    width: 160px;
+  }
+
+  .hero-title {
+    font-size: 30px;
+  }
+
+  .hero-author {
+    font-size: 17px;
+  }
+
+  .hero-excerpt {
+    font-size: 14px;
+  }
+
+  .section-divider {
+    padding: 0 20px;
+    gap: 10px;
+  }
+
+  .divider-center {
+    font-size: 18px;
+  }
+}

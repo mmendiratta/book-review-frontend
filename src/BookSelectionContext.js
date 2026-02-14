@@ -2,8 +2,7 @@ import { createContext, useContext, useState } from "react"
 
 const BookSelectionContext = createContext();
 
-
-const BookSelectionProvider = ({ children }) => {
+const BookSelectionProvider = ({ children, refreshReviews }) => {
     const [selectedBookReview, setSelectedBookReview] = useState();
     const [editBook, setEditBook] = useState(false);
 
@@ -14,6 +13,7 @@ const BookSelectionProvider = ({ children }) => {
                 setSelectedBookReview,
                 editBook,
                 setEditBook,
+                refreshReviews,
             }}
         >
             {children}
