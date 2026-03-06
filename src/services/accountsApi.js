@@ -1,4 +1,6 @@
-const ACCOUNTS_URL = "https://book-review-backend-pl3j.onrender.com/api/auth"
+import { API_URL } from '../config';
+
+const ACCOUNTS_URL = `${API_URL}/api/auth`
 
 export async function login({ username, password }) {
     return fetch(`${ACCOUNTS_URL}/login`, {
@@ -29,7 +31,7 @@ export function getAccountRoles() {
 };
 
 export const getBookBookReviews = async () => {
-    const data = await fetch("https://book-review-backend-pl3j.onrender.com/api/book-reviews")
+    const data = await fetch(`${API_URL}/api/book-reviews`)
         .then(response => response.json());
     return data;
 }
