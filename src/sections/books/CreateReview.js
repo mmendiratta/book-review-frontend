@@ -1,29 +1,10 @@
 import { useState, Fragment } from 'react';
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, Modal, Form, Input, Rate, Upload, Spin, Select } from 'antd';
+import { Button, Modal, Form, Input, Rate, Spin, Select } from 'antd';
 import { getAccountRoles } from '../../services/accountsApi';
-import { THUMBSNAP_CONFIG } from '../../config';
 import { GENRES } from '../../constants/genres';
+import { API_URL } from '../../config';
 
 const { TextArea } = Input;
-
-const postToThumbsnap = async (file) => {
-  const formData = new FormData();
-  formData.append('media', file.originFileObj);
-  formData.append('key', THUMBSNAP_CONFIG.API_KEY);
-  const response = await fetch(`${THUMBSNAP_CONFIG.API_URL}/upload`, {
-    method: 'POST',
-    body: formData,
-  });
-  return response.json();
-};
-
-const normFile = (e) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
 
 export const CreateReview = ({ refreshReviews }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -39,9 +20,8 @@ export const CreateReview = ({ refreshReviews }) => {
   const createNewPost = async (values) => {
     setLoading(true);
     try {
-      const uploadData = await postToThumbsnap(values.upload[0]);
       await fetch(
-        'https://book-review-backend-pl3j.onrender.com/api/book-reviews',
+        `${API_URL}/api/book-reviews`,
         {
           method: 'POST',
           headers: {
@@ -53,7 +33,7 @@ export const CreateReview = ({ refreshReviews }) => {
             review: values.review,
             rating: values.rating,
             genre: values.genre,
-            url: uploadData.data.media || '',
+            isbn: values.isbn,
           }),
         }
       );
@@ -132,10 +112,11 @@ export const CreateReview = ({ refreshReviews }) => {
             >
               <Rate />
             </Form.Item>
-            <Form.Item name="upload" getValueFromEvent={normFile}>
-              <Upload name="bookCover">
-                <Button icon={<UploadOutlined />}>Upload Book Cover</Button>
-              </Upload>
+            <Form.Item
+              name="isbn"
+              rules={[{ required: true, message: 'Please input the ISBN!' }]}
+            >
+              <Input placeholder="ISBN" />
             </Form.Item>
           </Form>
         </Spin>
