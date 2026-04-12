@@ -27,4 +27,8 @@ export const GENRES = [
     value: 'contemporary',
     label: 'Contemporary',
   },
+  {
+    value: 'fantasy-mythology',
+    label: 'Fantasy & Mythology',
+  },
 ];
