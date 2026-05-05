@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react';
-import { Modal, Form, Input, Rate, Button, Spin, Select } from 'antd';
+import { Modal, Form, Input, Rate, Button, Spin, Select, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import { useBookSelectionContext } from '../../BookSelectionContext';
 import { GENRES } from '../../constants/genres';
 import { API_URL } from '../../config';
@@ -11,8 +12,10 @@ export const EditReview = ({ selectedBook, refreshReviews }) => {
   const [form] = Form.useForm();
   const [deleting, setDeleting] = useState(false);
   const [updating, setUpdating] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
   const handleModalState = () => {
+    setImageFile(null);
     form.resetFields();
     setEditBook(false);
   };
@@ -20,24 +23,20 @@ export const EditReview = ({ selectedBook, refreshReviews }) => {
   const editBookReview = async (values, id) => {
     setUpdating(true);
     try {
-      await fetch(
-        `${API_URL}/api/book-reviews/${id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-          },
-          body: JSON.stringify({
-            id,
-            title: values.title,
-            author: values.author,
-            review: values.review,
-            rating: values.rating,
-            genre: values.genre,
-            isbn: values.isbn,
-          }),
-        }
-      );
+      const formData = new FormData();
+      formData.append('id', id);
+      formData.append('title', values.title);
+      formData.append('author', values.author);
+      formData.append('review', values.review);
+      formData.append('rating', values.rating);
+      formData.append('genre', values.genre);
+      if (values.isbn) formData.append('isbn', values.isbn);
+      if (imageFile) formData.append('image', imageFile);
+
+      await fetch(`${API_URL}/api/book-reviews/${id}`, {
+        method: 'PUT',
+        body: formData,
+      });
     } catch (error) {
       console.error('Failed to edit post:', error);
     } finally {
@@ -143,7 +142,20 @@ export const EditReview = ({ selectedBook, refreshReviews }) => {
               name="isbn"
               initialValue={selectedBook?.review.isbn}
             >
-              <Input placeholder="ISBN" />
+              <Input placeholder="ISBN (used for cover if no image uploaded)" />
+            </Form.Item>
+            <Form.Item label="Book Cover Image">
+              <Upload
+                accept="image/jpg,image/jpeg,image/png"
+                maxCount={1}
+                beforeUpload={(file) => {
+                  setImageFile(file);
+                  return false;
+                }}
+                onRemove={() => setImageFile(null)}
+              >
+                <Button icon={<UploadOutlined />}>Upload New Cover</Button>
+              </Upload>
             </Form.Item>
             <Button
               onClick={() => deleteBookReview(selectedBook?.review._id)}
