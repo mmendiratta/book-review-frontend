@@ -39,7 +39,7 @@ const HomePage = () => {
     return matchesGenre && matchesSearch;
   });
 
-  const mostRecentReview = reviews.length > 0 ? reviews[reviews.length - 1] : null;
+  const mostRecentReview = reviews.length > 0 ? reviews[0] : null;
 
   return (
     <BookSelectionProvider refreshReviews={fetchReviews}>
